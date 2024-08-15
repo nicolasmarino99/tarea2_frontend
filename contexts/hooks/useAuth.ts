@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import useAuthToken from './useAuthToken';
 import useAuthUser from './useAuthUser';
@@ -7,7 +6,6 @@ import { InternalAxiosRequestConfig, AxiosError } from 'axios';
 import { User } from 'types';
 
 const useAuth = () => {
-  const router = useRouter();
   const { token, saveToken, removeToken } = useAuthToken();
   const { user, fetchUser } = useAuthUser();
 
@@ -26,7 +24,7 @@ const useAuth = () => {
       (response) => response,
       (error: AxiosError) => {
         if (error.response?.status === 401) {
-          router.push('/login');
+          return false
         }
         return Promise.reject(error);
       }
@@ -36,16 +34,17 @@ const useAuth = () => {
       axiosInstance.interceptors.request.eject(requestInterceptor);
       axiosInstance.interceptors.response.eject(responseInterceptor);
     };
-  }, [token, router]);
+  }, [token]);
 
   const login = async (email: string, password: string) => {
     try {
       const { data } = await axiosInstance.post<{ token: string; user: User }>('/api/auth/login', { email, password });
       saveToken(data.token);
       fetchUser();
-      router.push('/dashboard');
+      return true; 
     } catch (error) {
       console.error('Login failed', error);
+      return false; 
     }
   };
 
@@ -54,16 +53,22 @@ const useAuth = () => {
       const { data } = await axiosInstance.post<{ token: string; user: User }>('/api/auth/signup', { email, password, name });
       saveToken(data.token);
       fetchUser();
-      router.push('/dashboard');
+      return true;
     } catch (error) {
       console.error('Signup failed', error);
+      return false;
     }
   };
 
-  const logout = () => {
-    axiosInstance.post('/api/auth/logout');
-    removeToken();
-    router.push('/login');
+  const logout = async () => {
+    try {
+      await axiosInstance.post('/api/auth/logout');
+      removeToken();
+      return true
+    } catch (error) {
+      console.error('Logout failed', error);
+      return false
+    }
   };
 
   return { user, login, logout, signup };

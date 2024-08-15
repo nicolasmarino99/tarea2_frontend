@@ -1,7 +1,7 @@
 "use client";
 
+import { AuthProvider } from "contexts/AuthContext";
 import React from "react";
-import { AuthProvider } from "../contexts/AuthContext";
 // import { SomeOtherProvider } from "../contexts/SomeOtherContext";
 
 const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => {

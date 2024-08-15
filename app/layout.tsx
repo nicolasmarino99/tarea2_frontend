@@ -1,6 +1,4 @@
-"use client";
-
-import Providers from "providers/providers";
+import Providers from "providers";
 
 export default function RootLayout({
   children,
