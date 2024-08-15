@@ -4,3 +4,8 @@ declare module "*module.css" {
   };
   export default styles;
 }
+
+export interface User {
+  id: string;
+  name: string;
+}
