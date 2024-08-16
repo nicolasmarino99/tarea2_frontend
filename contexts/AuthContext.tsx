@@ -7,7 +7,12 @@ import { User } from "types";
 type AuthContextType = {
   user: User | null;
   login: (email: string, password: string) => Promise<boolean>;
-  signup: (email: string, password: string, name: string) => Promise<boolean>;
+  signup: (
+    email: string,
+    password: string,
+    name: string,
+    passwordConfirmation: string
+  ) => Promise<boolean>;
   logout: () => Promise<void>;
   isAuthenticated: boolean;
 };

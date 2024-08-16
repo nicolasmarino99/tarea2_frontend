@@ -66,9 +66,9 @@ const useAuth = () => {
     }
   };
 
-  const signup = async (email: string, password: string, name: string) => {
+  const signup = async (email: string, password: string, name: string, passwordConfirmation: string) => {
     try {
-      const { data } = await signupApi(email, password, name); 
+      const { data } = await signupApi(email, password, name, passwordConfirmation); 
       saveToken(data.token);
       fetchUser();
       setIsAuthenticated(true);
