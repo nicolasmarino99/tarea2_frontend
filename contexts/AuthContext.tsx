@@ -2,17 +2,12 @@
 
 import { createContext, useContext, ReactNode } from "react";
 import useAuth from "./hooks/useAuth";
-import { User } from "types";
+import { User, SignupParams } from "types";
 
 type AuthContextType = {
   user: User | null;
   login: (email: string, password: string) => Promise<boolean>;
-  signup: (
-    email: string,
-    password: string,
-    name: string,
-    passwordConfirmation: string
-  ) => Promise<boolean>;
+  signup: (params: SignupParams) => Promise<boolean>;
   logout: () => Promise<void>;
   isAuthenticated: boolean;
 };

@@ -4,6 +4,7 @@ import useAuthUser from './useAuthUser';
 import { loginApi, signupApi, logoutApi } from '../../lib/auth'; 
 import { AxiosError } from 'axios';
 import axiosInstance from 'lib/axios';
+import { SignupParams } from 'types';
 
 const useAuth = () => {
   const { token, saveToken, removeToken } = useAuthToken();
@@ -66,9 +67,9 @@ const useAuth = () => {
     }
   };
 
-  const signup = async (email: string, password: string, name: string, passwordConfirmation: string) => {
+  const signup = async ({email, emailConfirmation, password, name, passwordConfirmation}: SignupParams) => {
     try {
-      const { data } = await signupApi(email, password, name, passwordConfirmation); 
+      const { data } = await signupApi({email, password, name, passwordConfirmation, emailConfirmation}); 
       saveToken(data.token);
       fetchUser();
       setIsAuthenticated(true);

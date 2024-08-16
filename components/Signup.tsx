@@ -10,7 +10,8 @@ type SignupFormData = {
   name: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  emailConfirmation: string;
+  passwordConfirmation: string;
 };
 
 const Signup = () => {
@@ -25,19 +26,33 @@ const Signup = () => {
     defaultValues: {
       name: "",
       email: "",
+      emailConfirmation: "",
       password: "",
-      confirmPassword: "",
+      passwordConfirmation: "",
     },
   });
 
   const onSubmit = async (data: SignupFormData) => {
-    if (data.password !== data.confirmPassword) {
+    const { password, emailConfirmation, passwordConfirmation, email, name } =
+      data;
+
+    if (password !== passwordConfirmation) {
       setError("Passwords do not match.");
+      return;
+    }
+    if (email !== emailConfirmation) {
+      setError("Emails do not match.");
       return;
     }
 
     try {
-      await signup(data.email, data.password, data.name, data.confirmPassword);
+      await signup({
+        email,
+        password,
+        name,
+        passwordConfirmation,
+        emailConfirmation,
+      });
     } catch (error) {
       setError("Signup failed. Please try again.");
     }
@@ -71,6 +86,21 @@ const Signup = () => {
           )}
         </label>
         <label className={styles.label}>
+          Confirm email:
+          <input
+            type="email"
+            {...register("emailConfirmation", {
+              required: "Please confirm your email",
+            })}
+            className={styles.input}
+          />
+          {errors.emailConfirmation && (
+            <p className={styles.errorMessage}>
+              {errors.emailConfirmation.message}
+            </p>
+          )}
+        </label>
+        <label className={styles.label}>
           Password:
           <input
             type="password"
@@ -85,14 +115,14 @@ const Signup = () => {
           Confirm Password:
           <input
             type="password"
-            {...register("confirmPassword", {
+            {...register("passwordConfirmation", {
               required: "Please confirm your password",
             })}
             className={styles.input}
           />
-          {errors.confirmPassword && (
+          {errors.passwordConfirmation && (
             <p className={styles.errorMessage}>
-              {errors.confirmPassword.message}
+              {errors.passwordConfirmation.message}
             </p>
           )}
         </label>
