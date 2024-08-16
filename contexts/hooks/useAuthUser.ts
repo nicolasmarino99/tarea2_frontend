@@ -18,6 +18,7 @@ const useAuthUser = () => {
   const fetchUser = async () => {
     try {
       const { data } = await axiosInstance.get<{ user: User }>('/me');
+      console.log(data)
       setUser(data.user);
     } catch (error) {
       setUser(null);

@@ -21,7 +21,7 @@ export const signupApi = async ({
       password,
       username: name,
       password_confirmation: passwordConfirmation,
-      email_confirmation: emailConfirmation,
+      // email_confirmation: emailConfirmation,
     },
   };
   return axiosInstance.post<{ token: string; user: User }>("/signup", params);
