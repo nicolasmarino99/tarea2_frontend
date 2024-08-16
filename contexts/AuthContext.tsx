@@ -8,16 +8,19 @@ type AuthContextType = {
   user: User | null;
   login: (email: string, password: string) => Promise<boolean>;
   signup: (email: string, password: string, name: string) => Promise<boolean>;
-  logout: () => Promise<boolean>;
+  logout: () => Promise<void>;
+  isAuthenticated: boolean;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const { user, login, logout, signup } = useAuth();
+  const { user, login, logout, signup, isAuthenticated } = useAuth();
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, signup }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, signup, isAuthenticated }}
+    >
       {children}
     </AuthContext.Provider>
   );
