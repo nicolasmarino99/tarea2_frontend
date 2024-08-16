@@ -10,13 +10,14 @@ const useAuthUser = () => {
   useEffect(() => {
     if (token) {
       axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      console.log(token)
       fetchUser();
     }
   }, [token]);
 
   const fetchUser = async () => {
     try {
-      const { data } = await axiosInstance.get<{ user: User }>('/api/auth/me');
+      const { data } = await axiosInstance.get<{ user: User }>('/me');
       setUser(data.user);
     } catch (error) {
       setUser(null);

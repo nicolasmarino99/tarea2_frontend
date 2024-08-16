@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import useAuthToken from './useAuthToken';
 import useAuthUser from './useAuthUser';
-import { loginApi, signupApi, logoutApi } from '../../lib/auth'; 
+import { loginApi, signupApi, logoutApi } from '../../lib/api/auth'; 
 import { AxiosError } from 'axios';
 import axiosInstance from 'lib/axios';
 import { SignupParams } from 'types';

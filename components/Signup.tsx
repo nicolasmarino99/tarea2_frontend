@@ -1,10 +1,10 @@
-// components/Signup.tsx
 "use client";
 
-import useAuth from "contexts/hooks/useAuth";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import styles from "./Signup.module.css"; // Import CSS module for styling
+import { useRouter } from "next/navigation";
+import { useAuthContext } from "contexts/AuthContext";
 
 type SignupFormData = {
   name: string;
@@ -15,7 +15,8 @@ type SignupFormData = {
 };
 
 const Signup = () => {
-  const { signup } = useAuth();
+  const router = useRouter();
+  const { signup } = useAuthContext();
   const [error, setError] = useState<string | null>(null);
 
   const {
@@ -53,6 +54,7 @@ const Signup = () => {
         passwordConfirmation,
         emailConfirmation,
       });
+      router.push("/dashboard");
     } catch (error) {
       setError("Signup failed. Please try again.");
     }

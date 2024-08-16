@@ -1,4 +1,4 @@
-import axiosInstance from "./axios";
+import axiosInstance from "../axios";
 import { SignupParams, User } from "types";
 
 export const loginApi = async (email: string, password: string) => {

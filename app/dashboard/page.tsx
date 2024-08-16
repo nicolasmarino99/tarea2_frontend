@@ -1,15 +1,14 @@
 "use client";
 
+import { useAuthContext } from "contexts/AuthContext";
 import React from "react";
-import ProtectedRoute from "@/components/ProtectedRoute";
 
 export default function Dashboard() {
+  const { user } = useAuthContext();
   return (
-    <ProtectedRoute>
-      <div>
-        <h1>Dashboard</h1>
-        {/* Your dashboard content */}
-      </div>
-    </ProtectedRoute>
+    <div>
+      <h1>Dashboard {user?.id}</h1>
+      {user?.id}
+    </div>
   );
 }

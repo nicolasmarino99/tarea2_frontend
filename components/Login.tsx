@@ -1,11 +1,10 @@
-// components/Login.tsx
 "use client";
 
-import useAuth from "contexts/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import React, { useState } from "react";
 import styles from "./Login.module.css"; // Import CSS module for styling
+import { useAuthContext } from "contexts/AuthContext";
 
 type LoginFormData = {
   email: string;
@@ -14,7 +13,7 @@ type LoginFormData = {
 
 const Login = () => {
   const router = useRouter();
-  const { login } = useAuth();
+  const { login } = useAuthContext();
   const [error, setError] = useState<string | null>(null);
 
   const {
@@ -31,7 +30,7 @@ const Login = () => {
   const onSubmit = async (data: LoginFormData) => {
     try {
       await login(data.email, data.password);
-      router.push("/dashboard"); // Redirect after successful login
+      router.push("/dashboard");
     } catch (error) {
       setError("Login failed. Please try again.");
     }
