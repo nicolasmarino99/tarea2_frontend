@@ -1,0 +1,19 @@
+/* app/page.module.css or styles/page.module.css */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f2f5; /* Light gray background */
+}
+
+.formWrapper {
+  display: flex;
+  gap: 2rem; /* Adjust spacing between forms */
+}
+
+@media (max-width: 768px) {
+  .formWrapper {
+    flex-direction: column;
+  }
+}
