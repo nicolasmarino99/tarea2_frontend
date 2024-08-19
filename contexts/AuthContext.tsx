@@ -16,7 +16,6 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { user, login, logout, signup, isAuthenticated } = useAuth();
-
   return (
     <AuthContext.Provider
       value={{ user, login, logout, signup, isAuthenticated }}

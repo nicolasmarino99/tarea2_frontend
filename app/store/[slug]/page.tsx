@@ -1,8 +1,13 @@
+"use client";
+
 import React, { useState } from "react";
 import styles from "./page.module.css";
 import { Product } from "types";
 import EditProductForm from "@/components/Store/EditProductForm";
 import CreateProductForm from "@/components/Store/CreateProductForm";
+import { withAuth } from "@/components/withAuth";
+import useAuth from "contexts/hooks/useAuth";
+import { useAuthContext } from "contexts/AuthContext";
 
 type Params = {
   params: {
@@ -10,11 +15,10 @@ type Params = {
   };
 };
 
-export async function generateMetadata({ params }: Params) {
-  return { title: `Post: ${params.slug}` };
-}
+const toCapitalize = (str: string) =>
+  `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
 
-export default function Page({ params }: Params) {
+const Page = ({ params }: Params) => {
   const [products, setProducts] = useState<Product[]>([
     {
       id: 1,
@@ -31,7 +35,7 @@ export default function Page({ params }: Params) {
     { id: 3, name: "Shopping", photo: "/images/shopping.jpg", price: 75.0 },
     // ... other products
   ]);
-
+  const { user } = useAuthContext();
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
   const handleCreate = (newProduct: Omit<Product, "id">) => {
@@ -59,7 +63,7 @@ export default function Page({ params }: Params) {
         </div>
       )}
 
-      <h2>Productos de {params.slug}</h2>
+      <h2>Productos de {toCapitalize(params.slug)}</h2>
       <table className={styles.table}>
         <thead>
           <tr>
@@ -105,4 +109,6 @@ export default function Page({ params }: Params) {
       </table>
     </div>
   );
-}
+};
+
+export default withAuth(Page);

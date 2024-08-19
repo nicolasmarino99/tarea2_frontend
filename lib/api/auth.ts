@@ -1,6 +1,15 @@
 import axiosInstance from "../axios";
 import { SignupParams, User } from "types";
 
+interface dataContent {
+  code: number
+  message: string
+  data: {user: User}
+}
+interface loginResponse {
+  status: dataContent
+}
+
 export const loginApi = async (email: string, password: string) => {
   const params = {
     user: {
@@ -8,7 +17,7 @@ export const loginApi = async (email: string, password: string) => {
       password,
     },
   };
-  return axiosInstance.post<{ token: string; user: User }>("/login", params);
+  return axiosInstance.post<loginResponse>("/login", params);
 };
 
 export const signupApi = async ({
@@ -27,9 +36,13 @@ export const signupApi = async ({
       // email_confirmation: emailConfirmation,
     },
   };
-  return axiosInstance.post<{ token: string; user: User }>("/signup", params);
+  return axiosInstance.post<loginResponse>("/signup", params);
 };
 
-export const logoutApi = async () => {
-  return axiosInstance.post("/logout");
+export const logoutApi = async (token: string) => {
+  return axiosInstance.delete("/logout", {
+    headers: {
+      Authorization: token
+    }
+  });
 };

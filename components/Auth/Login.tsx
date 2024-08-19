@@ -13,7 +13,7 @@ type LoginFormData = {
 
 const Login = () => {
   const router = useRouter();
-  const { login } = useAuthContext();
+  const { login, isAuthenticated } = useAuthContext();
   const [error, setError] = useState<string | null>(null);
 
   const {
@@ -30,7 +30,7 @@ const Login = () => {
   const onSubmit = async (data: LoginFormData) => {
     try {
       await login(data.email, data.password);
-      router.push("/dashboard");
+      if (isAuthenticated) router.push("/shop");
     } catch (error) {
       setError("Login failed. Please try again.");
     }

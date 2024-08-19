@@ -1,20 +1,22 @@
-import { useEffect, useState } from 'react';
-import useAuthToken from './useAuthToken';
-import useAuthUser from './useAuthUser';
-import { loginApi, signupApi, logoutApi } from '../../lib/api/auth'; 
-import { AxiosError } from 'axios';
-import axiosInstance from 'lib/axios';
-import { SignupParams } from 'types';
+import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
+import { loginApi, signupApi, logoutApi } from "../../lib/api/auth";
+import { AxiosError } from "axios";
+import axiosInstance from "lib/axios";
+import { SignupParams, User } from "types";
+import useAuthCookie from "./useAuthCookie";
+import useUserCookie from "./useUserCookie";
 
 const useAuth = () => {
-  const { token, saveToken, removeToken } = useAuthToken();
-  const { user, fetchUser } = useAuthUser();
+  const authCookie = useAuthCookie();
+  const userCookie = useUserCookie();
+  const [user, setUser] = useState<User | null>(userCookie.user);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
     const requestInterceptor = (config: any) => {
-      if (token) {
-        config.headers['authorization'] = `Bearer ${token}`;
+      if (authCookie.token) {
+        config.headers["authorization"] = `Bearer ${authCookie.token}`;
       }
       return config;
     };
@@ -24,22 +26,27 @@ const useAuth = () => {
     const errorInterceptor = (error: AxiosError) => {
       if (error.response?.status === 401) {
         setIsAuthenticated(false);
-        removeToken();
+        authCookie.remove();
       }
       return Promise.reject(error);
     };
 
-    const requestInterceptorId = axiosInstance.interceptors.request.use(requestInterceptor, errorInterceptor);
-    const responseInterceptorId = axiosInstance.interceptors.response.use(responseInterceptor, errorInterceptor);
+    const requestInterceptorId = axiosInstance.interceptors.request.use(
+      requestInterceptor,
+      errorInterceptor
+    );
+    const responseInterceptorId = axiosInstance.interceptors.response.use(
+      responseInterceptor,
+      errorInterceptor
+    );
 
     const checkAuth = async () => {
-      if (token) {
+      if (authCookie.token) {
         try {
-          await fetchUser();
           setIsAuthenticated(true);
         } catch (error) {
           setIsAuthenticated(false);
-          removeToken();
+          authCookie.remove();
         }
       } else {
         setIsAuthenticated(false);
@@ -52,42 +59,53 @@ const useAuth = () => {
       axiosInstance.interceptors.request.eject(requestInterceptorId);
       axiosInstance.interceptors.response.eject(responseInterceptorId);
     };
-  }, [token, removeToken, fetchUser]);
+  }, [authCookie.remove, authCookie.token]);
 
   const login = async (email: string, password: string) => {
     try {
-      const { data } = await loginApi(email, password);
-      saveToken(data.token);
-      fetchUser();
+      const { data, headers } = await loginApi(email, password);
+      userCookie.save(data.status.data.user.username);
+      authCookie.save(headers["authorization"].split(" ")[1]);
       setIsAuthenticated(true);
       return true;
     } catch (error) {
-      console.error('Login failed', error);
+      console.error("Login failed", error);
       return false;
     }
   };
 
-  const signup = async ({email, emailConfirmation, password, name, passwordConfirmation}: SignupParams) => {
+  const signup = async ({
+    email,
+    emailConfirmation,
+    password,
+    name,
+    passwordConfirmation,
+  }: SignupParams) => {
     try {
-      const { data, headers } = await signupApi({email, password, name, passwordConfirmation, emailConfirmation}); 
-      saveToken(headers['authorization']);
-      console.log(data, headers, "data", headers['authorization'])
-      fetchUser();
+      const { data, headers } = await signupApi({
+        email,
+        password,
+        name,
+        passwordConfirmation,
+        emailConfirmation,
+      });
+      authCookie.save(headers["authorization"].split(" ")[1]);
+      userCookie.save(data.status.data.user.username);
       setIsAuthenticated(true);
       return true;
     } catch (error) {
-      console.error('Signup failed', error);
+      console.error("Signup failed", error);
       return false;
     }
   };
 
   const logout = async () => {
     try {
-      await logoutApi(); 
-      removeToken();
+      await logoutApi(authCookie.token);
+      authCookie.remove();
       setIsAuthenticated(false);
     } catch (error) {
-      console.error('Logout failed', error);
+      console.error("Logout failed", error);
     }
   };
 

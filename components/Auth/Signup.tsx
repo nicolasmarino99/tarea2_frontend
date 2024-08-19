@@ -19,7 +19,7 @@ interface Signup {
 }
 const Signup = ({ closeSignUp }: Signup) => {
   const router = useRouter();
-  const { signup } = useAuthContext();
+  const { signup, isAuthenticated } = useAuthContext();
   const [error, setError] = useState<string | null>(null);
 
   const {
@@ -57,7 +57,7 @@ const Signup = ({ closeSignUp }: Signup) => {
         passwordConfirmation,
         emailConfirmation,
       });
-      router.push("/dashboard");
+      if (isAuthenticated) router.push("/shop");
     } catch (error) {
       setError("Signup failed. Please try again.");
     }

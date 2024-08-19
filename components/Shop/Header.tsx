@@ -1,6 +1,9 @@
+import { useAuthContext } from "contexts/AuthContext";
 import styles from "./Header.module.css";
+import Logout from "../Auth/Logout";
 
 export default function Header() {
+  const { user } = useAuthContext();
   return (
     <header className={styles.header}>
       <h1>MERU</h1>
@@ -12,9 +15,9 @@ export default function Header() {
           <li>Supermercado</li>
           <li>Moda</li>
           <li>
-            <a href="/store">Vender</a>
+            <a href={`/store/${user}`}>Vender</a>
           </li>
-          <li>Ayuda / PQR</li>
+          <Logout />
         </ul>
       </nav>
     </header>

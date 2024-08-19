@@ -8,8 +8,9 @@ import OfferCard from "@/components/Shop/OfferCard";
 import OfferTypeFilter from "@/components/Shop/OfferTypeFilter";
 import Header from "@/components/Shop/Header";
 import SearchBar from "@/components/Shop/SearchBar";
+import { withAuth } from "@/components/withAuth";
 
-export default function ShopPage() {
+const ShopPage = () => {
   const { user } = useAuthContext();
   return (
     <div className={styles.offersContainer}>
@@ -39,4 +40,6 @@ export default function ShopPage() {
       </div>
     </div>
   );
-}
+};
+
+export default withAuth(ShopPage);
