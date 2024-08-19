@@ -16,7 +16,7 @@ export const withAuth = (WrappedComponent: any) => {
       if (session && pathname === "/") {
         // redirect("/shop");
       } else if (!session && pathname !== "/") {
-        // redirect("/");
+        redirect("/");
       } else {
         setLoading(false);
       }

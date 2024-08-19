@@ -2,9 +2,9 @@
 
 import { useForm } from "react-hook-form";
 import { Dispatch, SetStateAction, useState } from "react";
-import styles from "./Signup.module.css"; // Import CSS module for styling
-import { useRouter } from "next/navigation";
 import { useAuthContext } from "contexts/AuthContext";
+import useRedirectOnAuth from "./hooks/useRedirectOnAuth";
+import styles from "./Signup.module.css";
 
 type SignupFormData = {
   name: string;
@@ -17,10 +17,12 @@ type SignupFormData = {
 interface Signup {
   closeSignUp: Dispatch<SetStateAction<boolean>>;
 }
+
 const Signup = ({ closeSignUp }: Signup) => {
-  const router = useRouter();
-  const { signup, isAuthenticated } = useAuthContext();
+  const { signup } = useAuthContext();
   const [error, setError] = useState<string | null>(null);
+
+  useRedirectOnAuth("/shop");
 
   const {
     register,
@@ -57,7 +59,6 @@ const Signup = ({ closeSignUp }: Signup) => {
         passwordConfirmation,
         emailConfirmation,
       });
-      if (isAuthenticated) router.push("/shop");
     } catch (error) {
       setError("Signup failed. Please try again.");
     }

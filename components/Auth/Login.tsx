@@ -1,10 +1,10 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import React, { useState } from "react";
-import styles from "./Login.module.css";
 import { useAuthContext } from "contexts/AuthContext";
+import useRedirectOnAuth from "./hooks/useRedirectOnAuth";
+import styles from "./Login.module.css";
 
 type LoginFormData = {
   email: string;
@@ -12,9 +12,10 @@ type LoginFormData = {
 };
 
 const Login = () => {
-  const router = useRouter();
-  const { login, isAuthenticated } = useAuthContext();
+  const { login } = useAuthContext();
   const [error, setError] = useState<string | null>(null);
+
+  useRedirectOnAuth("/shop");
 
   const {
     register,
@@ -30,7 +31,6 @@ const Login = () => {
   const onSubmit = async (data: LoginFormData) => {
     try {
       await login(data.email, data.password);
-      if (isAuthenticated) router.push("/shop");
     } catch (error) {
       setError("Login failed. Please try again.");
     }
