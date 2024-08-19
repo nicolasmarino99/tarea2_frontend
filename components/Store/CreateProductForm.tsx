@@ -11,6 +11,7 @@ interface CreateProductFormProps {
 
 type FormValues = {
   name: string;
+  description: string;
   photo: string;
   price: number;
 };
@@ -24,6 +25,7 @@ export default function CreateProductForm({
     const newProduct = {
       name: data.name,
       photo: data.photo,
+      description: data.description,
       price: parseFloat(data.price.toString()),
     };
     onCreate(newProduct);

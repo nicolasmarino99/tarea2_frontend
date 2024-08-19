@@ -21,8 +21,9 @@ export interface SignupParams {
 
 
 export interface Product {
-  id: number;
+  id: string;
   name: string;
   photo: string;
   price: number;
+  description: number;
 }

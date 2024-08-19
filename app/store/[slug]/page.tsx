@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./page.module.css";
 import { Product } from "types";
 import EditProductForm from "@/components/Store/EditProductForm";
 import CreateProductForm from "@/components/Store/CreateProductForm";
 import { withAuth } from "@/components/withAuth";
-import useAuth from "contexts/hooks/useAuth";
-import { useAuthContext } from "contexts/AuthContext";
+import { useProductsContext } from "../../../contexts/ProductContext";
 
 type Params = {
   params: {
@@ -19,36 +18,25 @@ const toCapitalize = (str: string) =>
   `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
 
 const Page = ({ params }: Params) => {
-  const [products, setProducts] = useState<Product[]>([
-    {
-      id: 1,
-      name: "Restaurants",
-      photo: "/images/restaurants.jpg",
-      price: 50.0,
-    },
-    {
-      id: 2,
-      name: "Coffee Shops",
-      photo: "/images/coffee-shops.jpg",
-      price: 20.0,
-    },
-    { id: 3, name: "Shopping", photo: "/images/shopping.jpg", price: 75.0 },
-    // ... other products
-  ]);
-  const { user } = useAuthContext();
+  const { products, getProducts, createProduct, updateProduct, deleteProduct } =
+    useProductsContext();
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
-  const handleCreate = (newProduct: Omit<Product, "id">) => {
-    setProducts([...products, { id: products.length + 1, ...newProduct }]);
+  useEffect(() => {
+    getProducts();
+  }, [getProducts]);
+
+  const handleCreate = async (newProduct: Omit<Product, "id">) => {
+    await createProduct(newProduct);
   };
 
-  const handleUpdate = (updatedProduct: Product) => {
-    setProducts(
-      products.map((prod) =>
-        prod.id === updatedProduct.id ? updatedProduct : prod
-      )
-    );
+  const handleUpdate = async (updatedProduct: Product) => {
+    await updateProduct(updatedProduct.id, updatedProduct);
     setEditingProduct(null);
+  };
+
+  const handleDelete = async (id: string) => {
+    await deleteProduct(id);
   };
 
   return (
@@ -94,11 +82,7 @@ const Page = ({ params }: Params) => {
                 </button>
                 <button
                   className={styles.delete}
-                  onClick={() =>
-                    setProducts(
-                      products.filter((prod) => prod.id !== product.id)
-                    )
-                  }
+                  onClick={() => handleDelete(product.id)}
                 >
                   Delete
                 </button>
