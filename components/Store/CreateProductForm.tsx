@@ -1,8 +1,9 @@
-// store/CreateProductForm.tsx
+// components/store/CreateProductForm.tsx
 
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Product } from "types";
+import styles from "./Forms.module.css"; // Import the styles
 
 interface CreateProductFormProps {
   onCreate: (product: Omit<Product, "id">) => void;
@@ -30,24 +31,35 @@ export default function CreateProductForm({
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} style={{ marginBottom: "20px" }}>
-      <div>
-        <label>Name:</label>
-        <input type="text" {...register("name", { required: true })} />
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.formContainer}>
+      <div className={styles.formGroup}>
+        <label className={styles.label}>Name:</label>
+        <input
+          type="text"
+          className={styles.input}
+          {...register("name", { required: true })}
+        />
       </div>
-      <div>
-        <label>Photo URL:</label>
-        <input type="text" {...register("photo", { required: true })} />
+      <div className={styles.formGroup}>
+        <label className={styles.label}>Photo URL:</label>
+        <input
+          type="text"
+          className={styles.input}
+          {...register("photo", { required: true })}
+        />
       </div>
-      <div>
-        <label>Price:</label>
+      <div className={styles.formGroup}>
+        <label className={styles.label}>Price:</label>
         <input
           type="number"
           step="0.01"
+          className={styles.input}
           {...register("price", { required: true, valueAsNumber: true })}
         />
       </div>
-      <button type="submit">Create Product</button>
+      <button type="submit" className={styles.button}>
+        Create Product
+      </button>
     </form>
   );
 }

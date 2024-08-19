@@ -1,8 +1,10 @@
+"use client";
+
 import React, { useState } from "react";
 import styles from "./Products.module.css";
 import { Product } from "types";
-// import EditProductForm from "./EditProductForm";
-// import CreateProductForm from "./CreateProductForm";
+import EditProductForm from "@/components/Store/EditProductForm";
+import CreateProductForm from "@/components/Store/CreateProductForm";
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([
@@ -40,14 +42,14 @@ export default function Products() {
   return (
     <div className={styles.container}>
       <h2>Create New Product</h2>
-      {/* <CreateProductForm onCreate={handleCreate} />
+      <CreateProductForm onCreate={handleCreate} />
 
       {editingProduct && (
         <div>
           <h2>Edit Product</h2>
           <EditProductForm product={editingProduct} onUpdate={handleUpdate} />
         </div>
-      )} */}
+      )}
 
       <h2>Products</h2>
       <table className={styles.table}>
