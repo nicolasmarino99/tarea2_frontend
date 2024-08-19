@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import React, { useState } from "react";
-import styles from "./Login.module.css"; // Import CSS module for styling
+import styles from "./Login.module.css";
 import { useAuthContext } from "contexts/AuthContext";
 
 type LoginFormData = {
@@ -37,45 +37,32 @@ const Login = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.formContainer}>
-        <h1 className={styles.title}>Login</h1>
-        {error && <p className={styles.error}>{error}</p>}
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-          <label className={styles.label}>
-            Email:
-            <input
-              type="email"
-              {...register("email", { required: "Email is required" })}
-              className={styles.input}
-            />
-            {errors.email && (
-              <p className={styles.errorMessage}>{errors.email.message}</p>
-            )}
-          </label>
-          <label className={styles.label}>
-            Password:
-            <input
-              type="password"
-              {...register("password", { required: "Password is required" })}
-              className={styles.input}
-            />
-            {errors.password && (
-              <p className={styles.errorMessage}>{errors.password.message}</p>
-            )}
-          </label>
-          <button type="submit" className={styles.button}>
-            Login
-          </button>
-        </form>
-        <p className={styles.link}>
-          <a href="/forgot-password">Forgot Password?</a>
-        </p>
-        <p className={styles.link}>
-          Don't have an account? <a href="/signup">Sign up</a>
-        </p>
-      </div>
-    </div>
+    <>
+      {error && <p className={styles.error}>{error}</p>}
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+        <input
+          type="email"
+          placeholder="Email or phone number"
+          {...register("email", { required: "Email is required" })}
+          className={styles.inputField}
+        />
+        {errors.email && (
+          <p className={styles.errorMessage}>{errors.email.message}</p>
+        )}
+        <input
+          type="password"
+          placeholder="Password"
+          {...register("password", { required: "Password is required" })}
+          className={styles.inputField}
+        />
+        {errors.password && (
+          <p className={styles.errorMessage}>{errors.password.message}</p>
+        )}
+        <button type="submit" className={styles.loginButton}>
+          Log in
+        </button>
+      </form>
+    </>
   );
 };
 

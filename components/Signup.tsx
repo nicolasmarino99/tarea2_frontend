@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import styles from "./Signup.module.css"; // Import CSS module for styling
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "contexts/AuthContext";
@@ -14,7 +14,10 @@ type SignupFormData = {
   passwordConfirmation: string;
 };
 
-const Signup = () => {
+interface Signup {
+  closeSignUp: Dispatch<SetStateAction<boolean>>;
+}
+const Signup = ({ closeSignUp }: Signup) => {
   const router = useRouter();
   const { signup } = useAuthContext();
   const [error, setError] = useState<string | null>(null);
@@ -62,7 +65,8 @@ const Signup = () => {
 
   return (
     <div className={styles.formContainer}>
-      <h1 className={styles.title}>Sign Up</h1>
+      <h2 className={styles.title}>Sign Up</h2>
+      <p className={styles.subtit}>It's quick and easy.</p>
       {error && <p className={styles.error}>{error}</p>}
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <label className={styles.label}>
@@ -133,7 +137,8 @@ const Signup = () => {
         </button>
       </form>
       <p className={styles.link}>
-        Already have an account? <a href="/login">Login</a>
+        Already have an account?{" "}
+        <a onClick={() => closeSignUp((prev) => !prev)}>Login</a>
       </p>
     </div>
   );

@@ -8,18 +8,15 @@ const useAuthUser = () => {
   const { token } = useAuthToken();
 
   useEffect(() => {
-    if (token) {
-      axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      console.log(token)
-      fetchUser();
+    if (token || token !== "undefined") {
+      axiosInstance.defaults.headers.common['authorization'] = `Bearer ${token}`;
+      console.log(axiosInstance.defaults, 'axiosInstance')
     }
   }, [token]);
 
   const fetchUser = async () => {
     try {
-      const { data } = await axiosInstance.get<{ user: User }>('/me');
-      console.log(data)
-      setUser(data.user);
+      // setUser(data.user);
     } catch (error) {
       setUser(null);
     }

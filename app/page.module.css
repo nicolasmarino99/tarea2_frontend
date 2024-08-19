@@ -1,19 +1,84 @@
-/* app/page.module.css or styles/page.module.css */
 .container {
+  font-family: Arial, sans-serif;
+  background-color: #f0f2f5;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background-color: #f0f2f5; /* Light gray background */
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  flex-direction: column;
 }
 
-.formWrapper {
+.logo h1 {
+  color: #1877f2;
+  font-size: 3rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.logo p {
+  font-size: 1.2rem;
+  color: #1c1e21;
+  margin-top: 10px;
+}
+
+.loginBox {
   display: flex;
-  gap: 2rem; /* Adjust spacing between forms */
+  flex-direction: column;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 350px;
+  text-align: center;
+  margin-top: 20px;
 }
 
-@media (max-width: 768px) {
-  .formWrapper {
-    flex-direction: column;
-  }
+.signupBox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #00000026;
+}
+
+.loginButton:hover {
+  background-color: #165dc4;
+}
+
+.forgotPassword {
+  color: #1877f2;
+  text-decoration: none;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.forgotPassword:hover {
+  text-decoration: underline;
+}
+
+.createAccount {
+  background-color: #42b72a;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.createAccount:hover {
+  background-color: #36a420;
+}
+
+.createPageText {
+  font-size: 14px;
+  color: #1c1e21;
+  margin-top: 20px;
 }

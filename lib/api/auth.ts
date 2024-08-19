@@ -2,10 +2,13 @@ import axiosInstance from "../axios";
 import { SignupParams, User } from "types";
 
 export const loginApi = async (email: string, password: string) => {
-  return axiosInstance.post<{ token: string; user: User }>("/login", {
-    email,
-    password,
-  });
+  const params = {
+    user: {
+      email,
+      password,
+    },
+  };
+  return axiosInstance.post<{ token: string; user: User }>("/login", params);
 };
 
 export const signupApi = async ({

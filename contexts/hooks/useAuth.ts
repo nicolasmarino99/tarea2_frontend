@@ -14,7 +14,7 @@ const useAuth = () => {
   useEffect(() => {
     const requestInterceptor = (config: any) => {
       if (token) {
-        config.headers['Authorization'] = `Bearer ${token}`;
+        config.headers['authorization'] = `Bearer ${token}`;
       }
       return config;
     };
@@ -69,8 +69,9 @@ const useAuth = () => {
 
   const signup = async ({email, emailConfirmation, password, name, passwordConfirmation}: SignupParams) => {
     try {
-      const { data } = await signupApi({email, password, name, passwordConfirmation, emailConfirmation}); 
-      saveToken(data.token);
+      const { data, headers } = await signupApi({email, password, name, passwordConfirmation, emailConfirmation}); 
+      saveToken(headers['authorization']);
+      console.log(data, headers, "data", headers['authorization'])
       fetchUser();
       setIsAuthenticated(true);
       return true;
