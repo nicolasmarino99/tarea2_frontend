@@ -18,3 +18,11 @@ export interface SignupParams {
   name: string;
   passwordConfirmation: string;
 }
+
+
+export interface Product {
+  id: number;
+  name: string;
+  photo: string;
+  price: number;
+}

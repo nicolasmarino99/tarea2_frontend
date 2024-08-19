@@ -3,7 +3,7 @@ import styles from "./Header.module.css";
 export default function Header() {
   return (
     <header className={styles.header}>
-      <img src="/logo.png" alt="Mercado Libre Logo" className={styles.logo} />
+      <h1>MERU</h1>
       <nav>
         <ul className={styles.navLinks}>
           <li>Categorías</li>
@@ -11,7 +11,9 @@ export default function Header() {
           <li>Historial</li>
           <li>Supermercado</li>
           <li>Moda</li>
-          <li>Vender</li>
+          <li>
+            <a href="/store">Vender</a>
+          </li>
           <li>Ayuda / PQR</li>
         </ul>
       </nav>

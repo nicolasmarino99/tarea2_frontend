@@ -2,7 +2,8 @@
   display: flex;
   justify-content: space-between;
   padding: 20px;
-  background-color: #ffdb15;
+  background-color: #ff8300;
+  align-items: center;
 }
 
 .logo {

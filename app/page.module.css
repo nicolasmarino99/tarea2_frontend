@@ -11,7 +11,7 @@
 }
 
 .logo h1 {
-  color: #1877f2;
+  color: #ff8300;
   font-size: 3rem;
   font-weight: bold;
   margin: 0;
@@ -48,11 +48,11 @@
 }
 
 .loginButton:hover {
-  background-color: #165dc4;
+  background-color: #be6200;
 }
 
 .forgotPassword {
-  color: #1877f2;
+  color: #ff8300;
   text-decoration: none;
   font-size: 14px;
   margin-bottom: 20px;

@@ -12,7 +12,7 @@
 }
 
 .loginButton {
-  background-color: #1877f2;
+  background-color: #ff8300;
   color: white;
   padding: 12px;
   border: none;
@@ -23,7 +23,7 @@
 }
 
 .button:hover {
-  background-color: #165eab;
+  background-color: #c26400;
 }
 
 .error {
