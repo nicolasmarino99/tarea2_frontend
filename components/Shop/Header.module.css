@@ -1,0 +1,20 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #ffdb15;
+}
+
+.logo {
+  height: 40px;
+}
+
+.navLinks {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navLinks li {
+  cursor: pointer;
+}

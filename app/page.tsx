@@ -1,8 +1,8 @@
 "use client";
 
-import Login from "@/components/Login";
-import Signup from "@/components/Signup";
-import styles from "./page.module.css"; // Import CSS module for styling
+import Login from "@/components/Auth/Login";
+import Signup from "@/components/Auth/Signup";
+import styles from "./page.module.css";
 import { useState } from "react";
 
 export default function HomePage() {

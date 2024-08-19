@@ -1,0 +1,9 @@
+.shopPageContainer {
+  padding: 20px;
+}
+
+.offerCards {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
