@@ -12,45 +12,43 @@ import { withAuth } from "@/components/withAuth";
 import { useProductsContext } from "contexts/ProductContext";
 
 const ShopPage = () => {
-  const { products, getProducts } = useProductsContext();
-
-  useEffect(() => {
-    getProducts();
-  }, [getProducts]);
+  const { products } = useProductsContext();
 
   return (
     <div className={styles.offersContainer}>
       <Header />
       <SearchBar />
       <OfferTypeFilter />
-      <CategoriesFilter />
-      <div className={styles.offerCards}>
-        {products.map(({ photo, description, name, price }) => (
+      <div className={styles.productsContainer}>
+        <CategoriesFilter />
+        <div className={styles.offerCards}>
+          {products.map(({ attributes }) => (
+            <OfferCard
+              image={attributes.photo}
+              title={attributes.name}
+              price={String(attributes.price)}
+              discount="46% OFF"
+            />
+          ))}
           <OfferCard
-            image={photo}
-            title={name}
-            price={String(price)}
+            image="/images/phone.png"
+            title="Xiaomi Redmi Note 13"
+            price="644.900"
             discount="46% OFF"
           />
-        ))}
-        <OfferCard
-          image="/images/phone.png"
-          title="Xiaomi Redmi Note 13"
-          price="644.900"
-          discount="46% OFF"
-        />
-        <OfferCard
-          image="/images/ssd.png"
-          title="Disco Sólido 1TB Crucial BX500"
-          price="268.900"
-          discount="20% OFF"
-        />
-        <OfferCard
-          image="/images/fridge.png"
-          title="Nevera No Frost 267 Lts Mabe"
-          price="1.590.027"
-          discount="32% OFF"
-        />
+          <OfferCard
+            image="/images/ssd.png"
+            title="Disco Sólido 1TB Crucial BX500"
+            price="268.900"
+            discount="20% OFF"
+          />
+          <OfferCard
+            image="/images/fridge.png"
+            title="Nevera No Frost 267 Lts Mabe"
+            price="1.590.027"
+            discount="32% OFF"
+          />
+        </div>
       </div>
     </div>
   );

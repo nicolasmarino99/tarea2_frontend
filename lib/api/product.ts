@@ -2,8 +2,18 @@ import axiosInstance from "../axios";
 import { Product } from "types";
 
 interface PaginatedResponse<T> {
-  success: boolean;
-  products: T[];
+  products: {data: T[]};
+  meta: {
+    current_page: number;
+    total_pages: number;
+    total_entries: number;
+  };
+}
+
+interface ProductData {
+  id: string;
+  type: "product";
+  attributes: Product;
 }
 
 interface ProductResponse {
@@ -12,7 +22,7 @@ interface ProductResponse {
 }
 
 export const getProductsApi = async (page: number = 1) => {
-  const response = await axiosInstance.get<PaginatedResponse<Product[]>>(`/products`, {
+  const response = await axiosInstance.get<PaginatedResponse<ProductData>>(`/products`, {
     params: { page },
   });
   return response.data;

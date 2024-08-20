@@ -12,10 +12,7 @@ export const withAuth = (WrappedComponent: any) => {
 
     useEffect(() => {
       const { pathname } = window.location;
-      console.log(pathname, session, session && pathname === "/");
-      if (session && pathname === "/") {
-        // redirect("/shop");
-      } else if (!session && pathname !== "/") {
+      if (!session && pathname !== "/") {
         redirect("/");
       } else {
         setLoading(false);

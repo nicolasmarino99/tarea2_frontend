@@ -22,9 +22,9 @@ export default function EditProductForm({
 }: EditProductFormProps) {
   const { register, handleSubmit, reset } = useForm<FormValues>({
     defaultValues: {
-      name: product.name,
-      photo: product.photo,
-      price: product.price,
+      name: product.attributes.name,
+      photo: product.attributes.photo,
+      price: product.attributes.price,
     },
   });
 

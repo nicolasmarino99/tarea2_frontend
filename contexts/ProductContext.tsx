@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, useContext, ReactNode, useState } from "react";
+import {
+  createContext,
+  useContext,
+  ReactNode,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import {
   getProductsApi,
   createProductApi,
@@ -26,14 +33,18 @@ const ProductsContext = createContext<ProductsContextType | undefined>(
 export const ProductsProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<any>([]);
 
-  const getProducts = async (page: number = 1) => {
+  const getProducts = useCallback(async (page: number = 1) => {
     try {
-      const response = await getProductsApi(page);
-      setProducts(response.products);
+      const { products } = await getProductsApi(page);
+      setProducts(products.data);
     } catch (error) {
       console.error("Failed to get products", error);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    getProducts();
+  }, [getProducts]);
 
   const createProduct = async (product: Omit<Product, "id">) => {
     try {

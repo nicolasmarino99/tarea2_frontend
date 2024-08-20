@@ -22,8 +22,11 @@ export interface SignupParams {
 
 export interface Product {
   id: string;
-  name: string;
-  photo: string;
-  price: number;
-  description: string;
+  type: string;
+  attributes: {
+    photo: string;
+    price: number;
+    description: string;
+    name: string;
+  }
 }

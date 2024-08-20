@@ -64,15 +64,15 @@ export default function Products() {
         <tbody>
           {products.map((product) => (
             <tr key={product.id}>
-              <td>{product.name}</td>
+              <td>{product.attributes.name}</td>
               <td>
                 <img
-                  src={product.photo}
-                  alt={product.name}
+                  src={product.attributes.photo}
+                  alt={product.attributes.name}
                   className={styles.photo}
                 />
               </td>
-              <td>${product.price.toFixed(2)}</td>
+              <td>${product.attributes.price.toFixed(2)}</td>
               <td className={styles.actions}>
                 <button
                   className={styles.edit}
