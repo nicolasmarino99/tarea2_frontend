@@ -14,16 +14,19 @@ import {
   getProductByIdApi,
   updateProductApi,
   deleteProductApi,
+  getProductByIdUsernameApi,
 } from "../lib/api/product";
 import { Product } from "types";
 
 type ProductsContextType = {
   products: Product[];
+  userProducts: Product[];
   getProducts: (page?: number) => Promise<void>;
   createProduct: (product: Omit<Product, "id">) => Promise<void>;
   getProductById: (id: string) => Promise<Product | undefined>;
   updateProduct: (id: string, product: Partial<Product>) => Promise<void>;
   deleteProduct: (id: string) => Promise<void>;
+  getProductByIdUsername: (username: string) => Promise<void>;
 };
 
 const ProductsContext = createContext<ProductsContextType | undefined>(
@@ -32,11 +35,21 @@ const ProductsContext = createContext<ProductsContextType | undefined>(
 
 export const ProductsProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<any>([]);
+  const [userProducts, setUserProducts] = useState<any>([]);
 
   const getProducts = useCallback(async (page: number = 1) => {
     try {
       const { products } = await getProductsApi(page);
       setProducts(products.data);
+    } catch (error) {
+      console.error("Failed to get products", error);
+    }
+  }, []);
+
+  const getProductByIdUsername = useCallback(async (username: string) => {
+    try {
+      const { data } = await getProductByIdUsernameApi(username);
+      setUserProducts(data);
     } catch (error) {
       console.error("Failed to get products", error);
     }
@@ -93,11 +106,13 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
     <ProductsContext.Provider
       value={{
         products,
+        userProducts,
         getProducts,
         createProduct,
         getProductById,
         updateProduct,
         deleteProduct,
+        getProductByIdUsername,
       }}
     >
       {children}

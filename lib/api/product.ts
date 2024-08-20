@@ -20,6 +20,14 @@ interface ProductResponse {
   success: boolean;
   product: Product;
 }
+interface ProductResponseByName<T> {
+  data: T[];
+  meta: {
+    current_page: number;
+    total_pages: number;
+    total_entries: number;
+  };
+}
 
 export const getProductsApi = async (page: number = 1) => {
   const response = await axiosInstance.get<PaginatedResponse<ProductData>>(`/products`, {
@@ -38,8 +46,8 @@ export const getProductByIdApi = async (id: string) => {
   return response.data;
 };
 
-export const getProductByIdUsername = async (username: string) => {
-  const response = await axiosInstance.get<ProductResponse>(`/products/by_user/${username}`);
+export const getProductByIdUsernameApi = async (username: string) => {
+  const response = await axiosInstance.get<ProductResponseByName<ProductData>>(`/products/by_user/${username}`);
   return response.data;
 };
 

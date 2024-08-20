@@ -8,14 +8,12 @@ export const withAuth = (WrappedComponent: any) => {
     const { isAuthenticated } = useAuthContext();
     const router = useRouter();
     const session = isAuthenticated;
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
       const { pathname } = window.location;
       if (!session && pathname !== "/") {
         redirect("/");
       } else {
-        setLoading(false);
       }
     }, [session, router]);
 

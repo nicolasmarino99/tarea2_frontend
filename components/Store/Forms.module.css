@@ -1,6 +1,7 @@
-/* components/store/Forms.module.css */
-
 .formContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #f9f9f9;
   padding: 20px;
   border-radius: 8px;

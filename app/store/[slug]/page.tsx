@@ -18,13 +18,18 @@ const toCapitalize = (str: string) =>
   `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
 
 const Page = ({ params }: Params) => {
-  const { products, getProducts, createProduct, updateProduct, deleteProduct } =
-    useProductsContext();
+  const {
+    products,
+    createProduct,
+    updateProduct,
+    deleteProduct,
+    getProductByIdUsername,
+  } = useProductsContext();
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
   useEffect(() => {
-    getProducts();
-  }, [getProducts]);
+    getProductByIdUsername(params.slug);
+  }, [getProductByIdUsername]);
 
   const handleCreate = async (newProduct: Omit<Product, "id">) => {
     await createProduct(newProduct);
