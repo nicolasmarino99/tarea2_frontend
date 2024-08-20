@@ -38,6 +38,11 @@ export const getProductByIdApi = async (id: string) => {
   return response.data;
 };
 
+export const getProductByIdUsername = async (username: string) => {
+  const response = await axiosInstance.get<ProductResponse>(`/products/by_user/${username}`);
+  return response.data;
+};
+
 export const updateProductApi = async (id: string, product: Partial<Product>) => {
   const response = await axiosInstance.patch<ProductResponse>(`/products/${id}`, { product });
   return response.data;

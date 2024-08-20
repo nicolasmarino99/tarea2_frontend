@@ -28,7 +28,7 @@ export default function CreateProductForm({
       description: data.description,
       price: parseFloat(data.price.toString()),
     };
-    onCreate(newProduct);
+    // onCreate(newProduct);
     reset();
   };
 

@@ -72,7 +72,7 @@ const Page = ({ params }: Params) => {
                   className={styles.photo}
                 />
               </td>
-              <td>${product.attributes.price.toFixed(2)}</td>
+              <td>${product.attributes.price}</td>
               <td className={styles.actions}>
                 <button
                   className={styles.edit}
