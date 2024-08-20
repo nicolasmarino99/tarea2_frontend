@@ -8,26 +8,26 @@ import CreateProductForm from "@/components/Store/CreateProductForm";
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([
-    {
-      id: 1,
-      name: "Restaurants",
-      photo: "/images/restaurants.jpg",
-      price: 50.0,
-    },
-    {
-      id: 2,
-      name: "Coffee Shops",
-      photo: "/images/coffee-shops.jpg",
-      price: 20.0,
-    },
-    { id: 3, name: "Shopping", photo: "/images/shopping.jpg", price: 75.0 },
+    // {
+    //   id: 1,
+    //   name: "Restaurants",
+    //   photo: "/images/restaurants.jpg",
+    //   price: 50.0,
+    // },
+    // {
+    //   id: 2,
+    //   name: "Coffee Shops",
+    //   photo: "/images/coffee-shops.jpg",
+    //   price: 20.0,
+    // },
+    // { id: 3, name: "Shopping", photo: "/images/shopping.jpg", price: 75.0 },
     // ... other products
   ]);
 
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
   const handleCreate = (newProduct: Omit<Product, "id">) => {
-    setProducts([...products, { id: products.length + 1, ...newProduct }]);
+    // setProducts([...products, { id: products.length + 1, ...newProduct }]);
   };
 
   const handleUpdate = (updatedProduct: Product) => {

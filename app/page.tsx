@@ -4,14 +4,9 @@ import Login from "@/components/Auth/Login";
 import Signup from "@/components/Auth/Signup";
 import styles from "./page.module.css";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useAuthContext } from "contexts/AuthContext";
-import { withAuth } from "@/components/withAuth";
 
 const HomePage = () => {
   const [open, setOpen] = useState(false);
-  const router = useRouter();
-  const { login, isAuthenticated } = useAuthContext();
   return (
     <div className={styles.container}>
       <div className={styles.logo}>

@@ -2,16 +2,22 @@
 
 import { useAuthContext } from "contexts/AuthContext";
 import styles from "./page.module.css";
-import React from "react";
+import React, { useEffect } from "react";
 import CategoriesFilter from "@/components/Shop/CategoriesFilter";
 import OfferCard from "@/components/Shop/OfferCard";
 import OfferTypeFilter from "@/components/Shop/OfferTypeFilter";
 import Header from "@/components/Shop/Header";
 import SearchBar from "@/components/Shop/SearchBar";
 import { withAuth } from "@/components/withAuth";
+import { useProductsContext } from "contexts/ProductContext";
 
 const ShopPage = () => {
-  const { user } = useAuthContext();
+  const { products, getProducts } = useProductsContext();
+
+  useEffect(() => {
+    getProducts();
+  }, [getProducts]);
+
   return (
     <div className={styles.offersContainer}>
       <Header />
@@ -19,6 +25,14 @@ const ShopPage = () => {
       <OfferTypeFilter />
       <CategoriesFilter />
       <div className={styles.offerCards}>
+        {products.map(({ photo, description, name, price }) => (
+          <OfferCard
+            image={photo}
+            title={name}
+            price={String(price)}
+            discount="46% OFF"
+          />
+        ))}
         <OfferCard
           image="/images/phone.png"
           title="Xiaomi Redmi Note 13"

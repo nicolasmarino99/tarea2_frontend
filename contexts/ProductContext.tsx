@@ -13,7 +13,7 @@ import { Product } from "types";
 type ProductsContextType = {
   products: Product[];
   getProducts: (page?: number) => Promise<void>;
-  createProduct: (product: Product) => Promise<void>;
+  createProduct: (product: Omit<Product, "id">) => Promise<void>;
   getProductById: (id: string) => Promise<Product | undefined>;
   updateProduct: (id: string, product: Partial<Product>) => Promise<void>;
   deleteProduct: (id: string) => Promise<void>;
@@ -35,7 +35,7 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const createProduct = async (product: Product) => {
+  const createProduct = async (product: Omit<Product, "id">) => {
     try {
       const response = await createProductApi(product);
       setProducts((prevProducts: any) => [...prevProducts, response.product]);

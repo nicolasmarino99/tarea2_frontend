@@ -38,9 +38,9 @@ const useAuthActions = (setIsAuthenticated: (isAuthenticated: boolean) => void) 
 
   const logout = async () => {
     try {
-      await logoutApi(authCookie.token);
       authCookie.remove();
       userCookie.remove();
+      await logoutApi(authCookie.token);
       setIsAuthenticated(false);
     } catch (error) {
       console.error("Logout failed", error);

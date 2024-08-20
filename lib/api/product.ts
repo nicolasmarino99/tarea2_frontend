@@ -18,7 +18,7 @@ export const getProductsApi = async (page: number = 1) => {
   return response.data;
 };
 
-export const createProductApi = async (product: Product) => {
+export const createProductApi = async (product: Omit<Product, "id">) => {
   const response = await axiosInstance.post<ProductResponse>(`/products`, { product });
   return response.data;
 };
