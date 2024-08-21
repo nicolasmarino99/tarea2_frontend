@@ -19,14 +19,15 @@ export interface SignupParams {
   passwordConfirmation: string;
 }
 
+export interface Attributes {
+  photo: string;
+  price: number;
+  description: string;
+  name: string;
+}
 
 export interface Product {
   id: string;
   type: string;
-  attributes: {
-    photo: string;
-    price: number;
-    description: string;
-    name: string;
-  }
+  attributes: Attributes
 }

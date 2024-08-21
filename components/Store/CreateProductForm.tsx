@@ -2,11 +2,11 @@
 
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Product } from "types";
+import { Attributes } from "types";
 import styles from "./Forms.module.css"; // Import the styles
 
 interface CreateProductFormProps {
-  onCreate: (product: Omit<Product, "id">) => void;
+  onCreate: (product: Attributes) => void;
 }
 
 type FormValues = {
@@ -28,7 +28,7 @@ export default function CreateProductForm({
       description: data.description,
       price: parseFloat(data.price.toString()),
     };
-    // onCreate(newProduct);
+    onCreate(newProduct);
     reset();
   };
 
@@ -48,6 +48,14 @@ export default function CreateProductForm({
           type="text"
           className={styles.input}
           {...register("photo", { required: true })}
+        />
+      </div>
+      <div className={styles.formGroup}>
+        <label className={styles.label}>Description:</label>
+        <input
+          type="text"
+          className={styles.input}
+          {...register("description", { required: true })}
         />
       </div>
       <div className={styles.formGroup}>

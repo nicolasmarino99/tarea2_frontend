@@ -13,6 +13,7 @@ interface EditProductFormProps {
 type FormValues = {
   name: string;
   photo: string;
+  description: string;
   price: number;
 };
 
@@ -24,6 +25,7 @@ export default function EditProductForm({
     defaultValues: {
       name: product.attributes.name,
       photo: product.attributes.photo,
+      description: product.attributes.description,
       price: product.attributes.price,
     },
   });
@@ -33,6 +35,7 @@ export default function EditProductForm({
       ...product,
       name: data.name,
       photo: data.photo,
+      description: data.description,
       price: parseFloat(data.price.toString()),
     };
     onUpdate(updatedProduct);
@@ -55,6 +58,14 @@ export default function EditProductForm({
           type="text"
           className={styles.input}
           {...register("photo", { required: true })}
+        />
+      </div>
+      <div className={styles.formGroup}>
+        <label className={styles.label}>description:</label>
+        <input
+          type="text"
+          className={styles.input}
+          {...register("description", { required: true })}
         />
       </div>
       <div className={styles.formGroup}>

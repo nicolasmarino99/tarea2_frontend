@@ -16,13 +16,14 @@ import {
   deleteProductApi,
   getProductByIdUsernameApi,
 } from "../lib/api/product";
-import { Product } from "types";
+import { Attributes, Product } from "types";
+import useAuthCookie from "contexts/hooks/useAuthCookie";
 
 type ProductsContextType = {
   products: Product[];
   userProducts: Product[];
   getProducts: (page?: number) => Promise<void>;
-  createProduct: (product: Omit<Product, "id">) => Promise<void>;
+  createProduct: (product: Attributes) => Promise<void>;
   getProductById: (id: string) => Promise<Product | undefined>;
   updateProduct: (id: string, product: Partial<Product>) => Promise<void>;
   deleteProduct: (id: string) => Promise<void>;
@@ -34,6 +35,8 @@ const ProductsContext = createContext<ProductsContextType | undefined>(
 );
 
 export const ProductsProvider = ({ children }: { children: ReactNode }) => {
+  const authCookie = useAuthCookie();
+
   const [products, setProducts] = useState<any>([]);
   const [userProducts, setUserProducts] = useState<any>([]);
 
@@ -59,14 +62,18 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
     getProducts();
   }, [getProducts]);
 
-  const createProduct = async (product: Omit<Product, "id">) => {
-    try {
-      const response = await createProductApi(product);
-      setProducts((prevProducts: any) => [...prevProducts, response.product]);
-    } catch (error) {
-      console.error("Failed to create product", error);
-    }
-  };
+  const createProduct = useCallback(
+    async (product: Attributes) => {
+      try {
+        const { data } = await createProductApi(product, authCookie.token);
+        console.log(data);
+        setProducts((prevProducts: any) => [...prevProducts, data.data]);
+      } catch (error) {
+        console.error("Failed to create product", error);
+      }
+    },
+    [setProducts]
+  );
 
   const getProductById = async (id: string) => {
     try {

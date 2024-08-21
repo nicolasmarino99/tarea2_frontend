@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import styles from "./page.module.css";
-import { Product } from "types";
+import { Attributes, Product } from "types";
 import EditProductForm from "@/components/Store/EditProductForm";
 import CreateProductForm from "@/components/Store/CreateProductForm";
 import { withAuth } from "@/components/withAuth";
@@ -26,12 +26,13 @@ const Page = ({ params }: Params) => {
     getProductByIdUsername,
   } = useProductsContext();
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
     getProductByIdUsername(params.slug);
   }, [getProductByIdUsername]);
 
-  const handleCreate = async (newProduct: Omit<Product, "id">) => {
+  const handleCreate = async (newProduct: Attributes) => {
     await createProduct(newProduct);
   };
 
@@ -49,9 +50,10 @@ const Page = ({ params }: Params) => {
       <h2>Crear nuevo producto</h2>
       <CreateProductForm onCreate={handleCreate} />
 
-      {editingProduct && (
+      {editingProduct && open && (
         <div>
           <h2>Edit Product</h2>
+          <button>X</button>
           <EditProductForm product={editingProduct} onUpdate={handleUpdate} />
         </div>
       )}
@@ -81,7 +83,10 @@ const Page = ({ params }: Params) => {
               <td className={styles.actions}>
                 <button
                   className={styles.edit}
-                  onClick={() => setEditingProduct(product)}
+                  onClick={() => {
+                    setOpen((prev) => !prev);
+                    setEditingProduct(product);
+                  }}
                 >
                   Edit
                 </button>
